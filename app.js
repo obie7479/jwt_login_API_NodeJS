@@ -14,9 +14,9 @@ const authRoutes = require('./routes/authRoutes');
 
 // ลงทะเบียนเส้นทาง
 app.use(authRoutes);
-
+mongoose.set("strictQuery", false);
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true ,})
   .then(() => {
     console.log('connect server successfully');
     app.listen(port, () => {
