@@ -2,7 +2,7 @@
     "version":5,
     "builds":[
         {
-            "src":"app.js",
+            "src":"npm start",
             "use":"@now/node"
         }
     ],
