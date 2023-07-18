@@ -97,12 +97,12 @@ async function login(req, res) {
     });
 
     if (!user) {
-      return res.status(401).json({ message: 'หมายเลขโทรศัพท์หรืออีเมลหรือรหัสผ่านไม่ถูกต้อง' });
+      return res.status(401).json({ message: 'email , phone or password incorrect' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'หมายเลขโทรศัพท์หรืออีเมลหรือรหัสผ่านไม่ถูกต้อง' });
+      return res.status(401).json({ message: 'email , phone or password incorrect' });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
@@ -119,11 +119,22 @@ async function login(req, res) {
     res.json(responseData);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'ข้อผิดพลาดบริการภายใน' });
+    res.status(500).json({ message: 'no connect server' });
+  }
+}
+
+async function getAllUsers(req, res) {
+  try {
+    const users = await User.find({}, '-password');
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'no connect server' });
   }
 }
 
 module.exports = {
   register,
   login,
+  getAllUsers,
 };

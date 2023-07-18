@@ -18,9 +18,9 @@ app.use(authRoutes);
 mongoose
   .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log('เชื่อมต่อกับ MongoDB แล้ว');
+    console.log('connect server successfully');
     app.listen(port, () => {
-      console.log(`เซิร์ฟเวอร์ทำงานบนพอร์ต ${port}`);
+      console.log(`connect server on port ${port}`);
     });
   })
   .catch((error) => console.error(error));
