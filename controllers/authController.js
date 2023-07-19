@@ -73,7 +73,7 @@ async function register(req, res) {
   try {
     const existingUser = await User.findOne({ $or: [{ phone }, { email }] });
     if (existingUser) {
-      return res.status(400).json({ message: 'หมายเลขโทรศัพท์หรืออีเมลนี้ถูกลงทะเบียนแล้ว' });
+      return res.status(400).json({ message: 'This phone number or email is already registered.' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -81,10 +81,10 @@ async function register(req, res) {
     const newUser = new User({ name, lastname, phone, email, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ message: 'สร้างผู้ใช้งานเรียบร้อยแล้ว' });
+    res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'ข้อผิดพลาดบริการภายใน' });
+    res.status(500).json({ message: 'internal service error' });
   }
 }
 
@@ -119,7 +119,7 @@ async function login(req, res) {
     res.json(responseData);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'no connect server' });
+    res.status(500).json({ message: 'internal service error' });
   }
 }
 
@@ -129,7 +129,7 @@ async function getAllUsers(req, res) {
     res.json(users);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'no connect server' });
+    res.status(500).json({ message: 'internal service error' });
   }
 }
 
